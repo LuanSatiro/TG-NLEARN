@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content%}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="flashes ">
+  {% for message in messages %}
+    <div class="text-center"style="margin-left:39%; background-color: ; width:300px; ">{{ message }}</div>
+  {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+
+<div class="text-center col-4 offset-4 mt-5 " style="">
+<h1>Login Nlearn</h1>
+<form method="POST" action="">
+    
+    {{ form.csrf_token }}
+    <fieldset>
+    <div class="form-group" style="width:;">
+    <label>Nome de usuário</label>
+    {% if form.username.errors %}
+    {{ form.username(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ form.username(class="form-control form-control-lg") }}
+    {% endif %}
+    </div>
+    <div class="form-group">
+    <label>Senha</label>
+    {% if form.password.errors %}
+    {{ form.password(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ form.password(class="form-control form-control-lg") }}
+    {% endif %}
+    </div>
+</fieldset>
+<div class="container-fluid text-center" style="margin-bottom: -200px;">
+    {{form.submit(class="ad2 btn border", style="background-color: #6C68E8; color:#ffff;")}}
+</div>
+</form>
+</div>
+
+{% endblock%}

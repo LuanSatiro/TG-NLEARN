@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container-fluid text- centerjustify-content-center mt-5" style="margin-bottom: -20%;">
+<div class="row" >
+    <div class="col-10 col-sm-10 col-md-1 col-lg-1 col-xl-1 offset-2 offset-lg-3 offset-xl-3">
+        <div class="card" style="width: 18rem;">
+            <img style="height:150px ;" src="{{ url_for('static', filename='img/t.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+              <h5 class="card-title">Linguagens</h5>
+              <p class="card-text">Com esta opção é posição adicionar, remover ou atualizar linguagens para as opções do site</p>
+              <a class="btn ad2" style="color:#ffff; background-color: #6C68E8;" href="/adm/list/languages/">Administrar Linguagem</a>
+            </div>
+          </div>
+        
+    </div>
+    <div class="col-10 col-sm-10 col-md-1 col-lg-1 col-xl-1 offset-2 offset-md-4 offset-lg-3 offset-xl-3">
+        <div class="card" style="width: 18rem;">
+            <img style="height:150px ;" src="{{ url_for('static', filename='img/l.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+              <h5 class="card-title">Conteudo das linguagens</h5>
+              <p class="card-text">Com esta opção é posição adicionar, remover ou atualizar  conteudo para as linguagens contidas no site</p>
+              <a class="btn ad2" style="color:#ffff; background-color: #6C68E8;"  href="{{ url_for('listposts') }}">Administrar Conteudo</a>
+            </div>
+          </div>
+        
+    </div>
+</div>
+</div>
+{% endblock%}

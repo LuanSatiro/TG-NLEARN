@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="flashes text-center ml-4 ">
+  {% for message in messages %}
+    <div class=""style="margin-left:39%; background-color: ; width:300px; ">{{ message }}</div>
+  {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+<div class="card text-center card text-center col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 offset-xl-3 offset-md-2 offset-lg-3 mt-5" style="margin-bottom:-15%; width: 45rem;">
+  <div class="card-header text-center text-light" style="background-color:#6C68E8 ;">
+    <h2>{{ post.title }}</h2>
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">{{post.subtitle}}</h4>
+    <p class="card-text">{{ post.text }}</p>
+    <p class="card-text">{{ post.exercise }}</p>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="/adm/list/posts">voltar</a>
+    <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+  </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Deletar conteudo?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <form action="{{ url_for('delete_postpost', post_id=post.id) }}" method="POST">
+            <input class="btn text-light" style="background-color: #6C68E8;" type="submit" value="Deletar">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "container-fluid ">
+    <div class=" row">
+        <div class="col-1">
+            {% include "guia.html" %}
+        </div>
+        <div class="container-fluid col-9" style="margin-left:">
+            {%for l in posts%}
+            <div class="container-fluid border mt-4" style="margin-left:;">
+                <div class="container-fluid border-bottom" style="margin-left:;">
+                    <h1>{{l.title}}</h1>
+                </div>
+                <div class="container-fluid border-bottom mt-2" style="margin-left:;">
+                    <h3 style="">{{l.subtitle}}</h3>
+                </div>
+                
+                <div class="container-fluid border-bottom mt-2" style="margin-left:; ; ">
+                    <span style="">{{l.text}}</span>
+                </div>
+                
+                <a class="btn ad2  " style="color:rgb(255, 255, 255); background-color: #6C68E8;" data-toggle="collapse" href="#CollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Resolução do exercicio</a>
+                    </p>
+                    <div class=" collapse multi-collapse" id="CollapseExample1">
+                        <div class=" card card-body">
+                            {{ l.exercise }}
+                        </div>
+                    </div>
+            </div>
+            {% endfor%}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,158 @@
+@font-face {
+    font-family: Quicksand;
+    src: url(/static/fonts/Quicksand-VariableFont_wght.ttf);
+    
+}
+
+body{
+    font-family: Quicksand;
+}
+
+a{
+    font-family: Quicksand;
+    font-weight: 900;
+}
+
+
+
+
+.navi{
+
+   font-family: Quicksand;
+   
+
+}
+
+nav {
+    margin-top: 8px;
+}
+
+.ma1{
+    min-height: 320px;
+    
+}
+.logo{
+    margin-top: 12px;
+    font-family: Quicksand;
+    font-size: x-large;
+    font-weight: 900;
+
+}
+
+
+.logo1{
+    height: 50px;
+    margin-top: -5px;
+
+}
+.border-right {
+    border-right: 6px solid #6981d2 !important;
+}
+button{
+    font-family: Quicksand;
+}
+.pc{
+
+
+}
+.texto{
+  
+    font-family: Quicksand;
+  
+}
+.c1{
+    margin-left: ;
+    margin-top:100px;
+    margin-bottom: -200px;
+}
+
+h5{
+    font-family: Quicksand;
+    margin-left:; 
+}
+
+footer{
+    margin-top: 400px;
+    font-family: Quicksand;
+}
+
+
+.sb{
+
+    Background: url("../img/a.png") 50% 50% no-repeat;
+    background-size: cover;
+    margin-top: 50px;
+    height: 300px;
+    font-family: Quicksand;
+
+}
+
+
+.sb1{
+
+    Background: url("../img/b.png") 50% 50% no-repeat;
+    background-size: cover;
+    margin-top: 50px;
+    height: 300px;
+    font-family: Quicksand;
+
+}
+
+.sb2{
+
+    Background: url("../img/d.png") 50% 50% no-repeat;
+    background-size: cover;
+    margin-top: 50px;
+    height: 300px;
+    font-family: Quicksand;
+
+}
+
+
+.ad1:hover { 
+    background-color:#6C68E8 !important;
+    color:rgb(255,255,255) !important;
+    
+    } 
+
+.ad2:hover { 
+        background-color:rgb(255, 255, 255) !important;
+        color:rgb(119, 83, 83) !important;
+        
+        }
+
+@media (min-width:0px) and (max-width: 350px) { 
+
+    .c1{
+
+         margin-left: -15%;
+       
+     }
+
+}
+@media (min-width:500px) and (max-width: 767.98px) { 
+
+    .c1{
+
+         margin-left: 10%;
+       
+     }
+
+}
+@media (min-width:351px) and (max-width: 498px) { 
+
+    .c1{
+        
+         margin-left: -3%;
+       
+     }
+
+}
+
+@media (min-width: 768px) and (max-width: 1200px) { 
+
+   .c1{
+	  
+   }
+
+}

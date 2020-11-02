@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+  
+{% block content %}
+     <div class = "container-fluid ma1" style = "background-color: #6981d2;">
+          <div class = "row" style = "padding-top: 40px;">
+          <div class="col-8 texto text-center text-light 	d-none d-sm d-md-block">
+          <h1 class ="t1 wow fadeInDown">Transforme o mundo!</h1>
+          <p class = "t2 wow fadeInLeft" data-wow-delay="0.5s"> Aprenda diversas tecnologias
+                          de forma simples e divertida
+                          e desenvolva um caminho
+                          para poder mudar o mundo,
+                          ingresse no mundo das maratonas
+                          ,contrua seu conhecimento e cresça
+                          profissionalmente, veja que tudo
+                        pode ser alcançado, quando está determinado
+                      o sufiente.</p>
+          </div>
+          
+          <div class="col-8 texto text-center text-light d-sm-block d-md-none" style="margin-left: 15%;">
+            <h1 class ="t1 wow fadeInDown">Transforme o mundo!</h1>
+            <p class = "t2 wow fadeInLeft" data-wow-delay="0.5s"> Aprenda diversas tecnologias
+                            de forma simples e divertida
+                            e desenvolva um caminho
+                            para poder mudar o mundo,
+                            ingresse no mundo das maratonas
+                            ,contrua seu conhecimento e cresça
+                            profissionalmente, veja que tudo
+                          pode ser alcançado, quando está determinado
+                        o sufiente.</p>
+            </div>
+          <img src="{{url_for('static', filename='img/pc.png')}}" class="img-fluid pc col-3 	d-none d-sm d-md-block" alt="Responsive image">
+        </div>
+
+      </div>
+
+      <div class="container-fluid">
+       
+        <div class="sb text-center pt-5 text-light  wow fadeInLeft container-fluid rounded" id="vag">
+          <h2 class= "mt-3">Maratonas</h2>
+          <p class ="mt-5"> as maratonas são eventos realizados baseados na logica programatica </p>
+        </div>
+        <div class=" sb1 text-center pt-5 text-light container-fluid wow fadeInRight rounded" data-wow-delay="0.3s">
+          <h2 class= "mt-3">Maratonas</h2>
+          <p class ="mt-5"> as maratonas são eventos realizados baseados na logica programatica </p>
+        </div>
+        <div class="sb2 text-center pt-5 text-light container-fluid wow fadeInLeft rounded" data-wow-delay="0.3s">
+          <h2 class= "mt-3">Maratonas</h2>
+          <p class ="mt-5"> as maratonas são eventos realizados baseados na logica programatica </p>
+        </div>
+        
+    
+      <div class="row justify-content-center c1  ">
+          {% include "card.html" %}
+      </div>
+      </div>
+{% endblock %}   

@@ -1,0 +1,12 @@
+{% for language in languagess %}
+<div class="col-10 col-sm-10 col-md-5 col-xl-3 mt-3">
+    <div class="card text-center wow fadeInLeft l1" style="background-color:; width: 18rem; height: ">
+        <img src="/static/img/{{language.image }}" style="margin-left:25%;width: 50%; height:150px" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ language.title }}</h5>
+        <p class="card-text">{{ language.description }}</p>
+        <a href="/index/{{language.key}}" class="btn ad2" style = "color:rgb(255, 255, 255); background-color: #6C68E8;">Acessar</a>
+    </div>
+    </div>
+</div>
+{% endfor %}
