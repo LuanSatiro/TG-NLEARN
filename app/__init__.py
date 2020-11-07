@@ -9,6 +9,7 @@ from flask_wtf  import  FlaskForm
 from  wtforms  import  StringField, PasswordField, TextAreaField, SubmitField, IntegerField, SelectField
 from wtforms.validators import InputRequired, Length, AnyOf, DataRequired
 from flask_login import LoginManager
+from sqlalchemy.sql import select
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -22,10 +23,15 @@ manager.add_command('db', MigrateCommand)
 lm = LoginManager(app)
 lm.init_app(app)
 
-from .models import tables
+from .models.tables import Languages
 
 def selectLanguage():
-    return [(l.key, l.title) for l in tables.Languages.query.all()]
+    s = select([Languages])
+    t = []
+    if s == True:    
+        return [(l.key, l.title) for l in Languages.query.all()]
+    else:
+        return t
 
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[DataRequired(message='deu ruim')])
@@ -46,7 +52,7 @@ class CreatePostForm(FlaskForm):
     text= TextAreaField('Texto', validators=[InputRequired('Um texto é exigido')])
     exercise = TextAreaField('Exercicio', validators=[InputRequired('A exercise is required')])
     key = StringField('key (Será atribuido ao guia de tópicos da linguagem)', validators=[InputRequired('Uma key é exigida'), Length(min=1, max=20, message= 'Máximo de 20 caracteres')])
-    languageKey = SelectField(u'Key da linguagem', choices=selectLanguage())
+    languageKey = SelectField(u'Key da linguagem', choices=selectLanguage(), validate_choice=False)
     submit= SubmitField('Finalizar')
    
 
