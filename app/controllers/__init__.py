@@ -3,7 +3,8 @@ from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm
 from app.models.tables import Languages, Posts, UserAdm
 from flask_login import login_user, logout_user, current_user, login_required
 from PIL import Image
-
+import secrets
+import os
 
 
 @lm.user_loader
@@ -89,7 +90,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static', picture_fn)
+    picture_path = os.path.join(app.root_path, 'static/storage', picture_fn)
 
     output_size = (125, 125)
     i = Image.open(form_picture)
@@ -104,14 +105,16 @@ def post():
     languagess = Languages.query.all()
     form = CreateLanguageForm()
     if form.validate_on_submit():
+        for o in languagess:
+            if o.key == form.key.data:
+                flash('Já existe uma linguagem com esta Key tente um valor diferente')
+                return  render_template('create_language.html', title='Nova linguagem',
+                           form=form, legend='Nova linguagem', languagess=languagess)
+        picture_file = ''
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
-        # if form.key.data == form.key:
-        #     flash('Já existe uma linguagem com esta Key, tente um valor diferente')
-        #     return render_template('create_language.html', title='Nova linguagem',
-        #                 form=form, legend='Nova linguagem', languagess=languagess)
-         
-        i = Languages(title=form.title.data, description=form.description.data, image=form.image.data, key=form.key.data)
+            
+        i = Languages(title=form.title.data, description=form.description.data, image=picture_file, key=form.key.data)
         db.session.add(i)
         db.session.commit()
         db.session.commit()
