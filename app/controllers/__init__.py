@@ -16,14 +16,21 @@ def load_user(id):
 def index():
 
     languagess = Languages.query.all()
+    
     return render_template('index.html', languagess=languagess)
 
 @app.route("/index/<key>")
 def language(key):
+    
     languages = Languages.query.filter_by(key=key).first()
+    
+    if languages == None:
+        return "<h1> Não existe está linguagem cadastrada <h1>"
     languagess = Languages.query.all()
+    
     posts = Posts.query.filter_by(languageKey = languages.key).all()
     post= Posts.query.all()
+    
     return render_template('language.html',languages=languages, posts=posts,post=post, languagess=languagess)
 
 @app.route("/aboutus")
@@ -181,6 +188,7 @@ def postView(post_id):
 def postpost():
     languagess = Languages.query.all()
     form = CreatePostForm()
+    form.languageKey.choices = [(l.key, l.title) for l in Languages.query.all()]
     if form.validate_on_submit():
         i = Posts(title=form.title.data, subtitle=form.subtitle.data, text=form.text.data, key=form.key.data, exercise=form.exercise.data, languageKey=form.languageKey.data)
         db.session.add(i)
