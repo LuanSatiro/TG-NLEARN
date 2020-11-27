@@ -42,8 +42,22 @@
            <a class="nav-link text-dark" style = "background-color: #ffffff;"  href="/aboutus">Sobre nós</a>
      </div>
    </nav>
+   <div class="container-fluid">
+   <div class="row">
    {% if current_user.is_authenticated %}
-   <div class="container-fluid text-right"> 
+   <div class="container text-left col-6" style=""> 
+    <div class="row">
+     <div class="container-fluid text-right col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 " style="padding-right:; background-color: ;">
+    <a class="btn border ad1" href="/index/login/adm">Voltar adm</a> 
+   </div>
+   <div class="container-fluid  col-8 col-sm-8 col-md-9 col-lg-9 col-xl-9 " style="margin-right:%; background-color: ;">  
+    <a class="btn border ad1" href="/adm/account">Conta</a> 
+   </div>
+   </div>
+   </div>
+   {% endif %}
+   {% if current_user.is_authenticated %}
+   <div class="container-fluid text-right col-6"> 
     <a class="btn border ad1" href="{{url_for('logout') }}">Deslogar</a> 
    </div>
    {% else %}
@@ -51,6 +65,8 @@
       <a class="btn border ad1" href="/index/login">Página administrativa</a> 
    </div>
    {% endif %}
+   </div>
+   </div>
 {% block content %}
 {% endblock %}
 

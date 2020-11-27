@@ -2,11 +2,11 @@
 {% block content %}
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-  <div class="flashes text-center ml-4 ">
-  {% for message in messages %}
-    <div class=""style="margin-left:39%; background-color: ; width:300px; ">{{ message }}</div>
-  {% endfor %}
-  </div>
+    <div class="flashes ">
+    {% for message in messages %}
+    <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+    {% endfor %}
+    </div>
 {% endif %}
 {% endwith %}
 <div class="card text-center card text-center col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 offset-xl-3 offset-md-2 offset-lg-3 mt-5" style="margin-bottom:-15%; width: 45rem;">
@@ -17,9 +17,18 @@
     <h4 class="card-title">{{post.subtitle}}</h4>
     <p class="card-text">{{ post.text }}</p>
     <p class="card-text">{{ post.exercise }}</p>
+   
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="/adm/list/posts">voltar</a>
+    {% if post.author == current_user %}
     <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+    {% elif current_user.flag == 'king'  %}
+    <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+    {% elif current_user.flag == 'mestre'  %}
+    <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+    {% endif %}
   </div>
   </div>
   <!-- Modal -->

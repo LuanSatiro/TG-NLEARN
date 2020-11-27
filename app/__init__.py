@@ -43,17 +43,20 @@ class CreateLanguageForm(FlaskForm):
 
 class CreatePostForm(FlaskForm):
 
-        
     title = StringField('Titulo', validators=[InputRequired(message='Um titulo é exigido'), Length(min=1, max=20, message= 'Máximo de 20 caracteres.')])
     subtitle = StringField('Subtitulo', validators=[InputRequired('Um subtitulo é exigido')])
     text= TextAreaField('Texto', validators=[InputRequired('Um texto é exigido')])
     exercise = TextAreaField('Exercicio', validators=[InputRequired('A exercise is required')])
     key = StringField('key (Será atribuido ao guia de tópicos da linguagem)', validators=[InputRequired('Uma key é exigida'), Length(min=1, max=20, message= 'Máximo de 20 caracteres')])
     languageKey = SelectField(u'Key da linguagem')
- 
     submit= SubmitField('Finalizar')
-   
 
+class UpdateAccount(FlaskForm):
+    username = StringField('Nome de usuário', validators=[InputRequired(message='Um usuário é exigido'), Length(min=1, max=30, message= 'Máximo de 30 caracteres.')])
+    password = StringField('Senha', validators=[InputRequired(message='Um usuário é exigido'), Length(min=1, max=30, message= 'Máximo de 30 caracteres.')])
+    contato = StringField('Contato', validators=[InputRequired(message='Um contato é exigido'), Length(min=1, max=60, message= 'Máximo de 60 caracteres.')])
+    flag = StringField('Flag', validators=[InputRequired(message='Uma tag é exigido'), Length(min=1, max=60, message= 'Máximo de 60 caracteres.')])
+    submit= SubmitField('Finalizar')
 # from app import admin
 # admin.init_app(app)
 from app.controllers import index

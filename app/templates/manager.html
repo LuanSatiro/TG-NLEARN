@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content%}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="flashes ">
+    {% for message in messages %}
+    <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+    {% endfor %}
+    </div>
+{% endif %}
+{% endwith %}
+
+
+<div class="container-fluid col-12 text-center">
+    <a class="btn text-center  ad2" style="color:#ffff; width:400px; background-color: #6C68E8;" href="/adm/managermonitor/newmonitor">Cadastrar monitor</a>
+</div>
+<div class="container-fluid">
+{% for l in users %}
+<div class="container-fluid border mt-4 col-12" style="">
+    <div class="row">
+        <div class="col-6">
+            <h4>Monitor: {{l.username}}</h4>
+        </div>
+        <div class="col-6">
+            <h4>Senha: {{l.password}}</h4>
+        </div>
+    
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h4>contato: {{l.contato}}</h4>
+        </div>
+        <div class="col-6">
+        {% if l.flag == 'king' %}
+            <p>Não é possivel visualizar essa flag</p>
+        {% else %}
+            <h4>flag: {{l.flag}}</h4>
+        {% endif %}
+        </div>
+    </div>
+    <div class="container-fluid text-center">
+    {% if l.flag == 'king' %}
+        <h5>Não é possivel excluir este usuário</h5>
+    {% else %}
+    <button type="button" style="color:#ffff; width:400px; background-color: #6C68E8;" class="ad2 btn btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Deletar monitor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times; </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Ao deletar este monitor também deletará todo o conteudo a ele atribuido, mesmo assim, você tem completa certeza de prosseguir?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <form action="/adm/managermonitor/{{l.id}}/delete" method="POST">
+                <input class="btn text-light" style="background-color: #6C68E8;" type="submit" value="Delete">
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+</div>
+{% endfor%}
+
+</div>
+
+
+{% endblock%}

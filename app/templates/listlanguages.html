@@ -5,14 +5,13 @@
 <div class="container-fluid text-center">
   {% with messages = get_flashed_messages() %}
   {% if messages %}
-    <div class="flashes ">
-    {% for message in messages %}
-      <div class=""style="margin-left:39%; background-color: ; width:300px; ">{{ message }}</div>
-    {% endfor %}
-    </div>
+      <div class="flashes ">
+      {% for message in messages %}
+      <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+      {% endfor %}
+      </div>
   {% endif %}
-{% endwith %}
-<a class="ad1 btn" href="/index/login/adm" >Voltar</a>
+  {% endwith %}
 <a class="ad2 border btn" style="color:#ffff; background-color: #6C68E8;" type="button" href="/adm/list/languages/post/new">Criar nova linguagem</a>
 
 </div>
@@ -23,11 +22,14 @@
     <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <div class="card mt-3">
         <div class="card-header text-left text-light" style="background-color:#6C68E8 ;">
-          Key da linguagem: {{ list.key }}
+         <h4>Criado por: {{list.author.username}}</h4>
+         <h5>Contato: {{list.author.contato}}</h5> 
+         Key da linguagem: {{ list.key }}
         </div>
         <div class="card-body">
           <h5 class="card-title">{{ list.title }}</h5>
           <p class="card-text">{{ list.description }}</p>
+          
           <a class="btn border ad2" style="color:#ffff; background-color: #6C68E8;" href="{{ url_for('listlanguages', post_id=list.id) }}">Editar linguagem</a>
         </div>
       </div>

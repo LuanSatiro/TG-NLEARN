@@ -1,5 +1,5 @@
 from app import db
-
+from flask_login import UserMixin
 
 
         
@@ -12,16 +12,10 @@ class Posts(db.Model):
     text = db.Column(db.Text)
     key = db.Column(db.String(20))
     exercise = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     languageKey = db.Column(db.String(20), db.ForeignKey('languages.key', ondelete='CASCADE', onupdate='CASCADE'))
     
 
-    def __init__(self, title, subtitle, text, key, exercise, languageKey):
-        self.title = title
-        self.subtitle = subtitle
-        self.text = text
-        self.exercise = exercise
-        self.key = key
-        self.languageKey=languageKey
 
         
 
@@ -33,22 +27,24 @@ class Languages(db.Model):
     description = db.Column(db.String(120))
     image = db.Column(db.String(40))
     key = db.Column(db.String(20), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     relation = db.relationship(Posts, backref="languages", passive_deletes=True, passive_updates=True)
     
-    def __init__(self, title, description, image, key):
-        self.title = title
-        self.description = description
-        self.image = image
-        self.key = key    
 
 
 
-class UserAdm(db.Model):
-    __tablename__ = "useradm"
+
+class Users(db.Model, UserMixin):
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String(30))
+    username =  db.Column(db.String(30), unique=True)
     password = db.Column(db.String(30))
+    contato = db.Column(db.String(60))
+    flag = db.Column(db.String(30))
+    languages = db.relationship('Languages', backref='author', lazy=True)
+    posts = db.relationship('Posts', backref='author', lazy=True)
+   
 
     @property
     def is_authenticated(self):
@@ -64,8 +60,5 @@ class UserAdm(db.Model):
         return str(self.id)
 
 
-    def __init__(self, username, password):
-        self.username= username
-        self.password = password
-
+ 
 

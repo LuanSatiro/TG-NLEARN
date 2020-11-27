@@ -3,11 +3,11 @@
 {% block content%}
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-  <div class="flashes ">
-  {% for message in messages %}
-    <div class="text-center"style="margin-left:39%; background-color: ; width:300px; ">{{ message }}</div>
-  {% endfor %}
-  </div>
+    <div class="flashes ">
+    {% for message in messages %}
+    <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+    {% endfor %}
+    </div>
 {% endif %}
 {% endwith %}
 

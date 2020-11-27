@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from "_render_field2.html" import render_field %}
+{% block content %}
+<div class="container´= text-center">
+    <div class="media">
+    <div class="media-body">
+        <h2 class="account-heading">Nome de usuário: {{ current_user.username }}</h2>
+    </div>
+    </div>
+<form method="POST" action="" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <legend class="border-bottom mb-4">Informações da Conta</legend>
+ 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flashes ">
+        {% for message in messages %}
+        <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+  
+    <fieldset>
+        <div class=" " style="margin-left: 10%;">
+        {{ render_field(form.username)}}
+        {{ render_field(form.password)}}
+        {{ render_field(form.contato)}}
+        </div>
+        <div class="form-group text-center">
+        <a class="ad2 btn" style="background-color: #6C68E8; color:#ffff;" type="button" href="/adm/list/languages/">voltar</a>
+        <button type="reset" class="ad1 btn btn-default">Cancel</button>
+        {{form.submit(class="ad2 btn", style="background-color: #6C68E8; color:#ffff;")}}
+        </div>
+    </fieldset>
+    </form>
+</div>
+
+{% endblock %}
