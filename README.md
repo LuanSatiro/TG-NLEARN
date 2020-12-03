@@ -39,7 +39,7 @@ e por fim: python run.py db upgrade
 ### Quarta etapa: 
 
 ```
-Entre no seu banco Mysql pelo workbench e adicione um usuário e senha na table UserAdm para poder fazer login na plataforma
+Entre no seu banco Mysql pelo workbench e adicione um usuário e senha e no campo flag utilize "king" na table Users para poder fazer login na plataforma
 
 ```
 ### Etapa final: 
