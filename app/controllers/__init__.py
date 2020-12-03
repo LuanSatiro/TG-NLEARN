@@ -98,14 +98,19 @@ def delete_monitor(post_id):
     flag = 'mestre'
     flagMaster='king'
     if flagMaster != current_user.flag:
-        abort(403)
+        post = Users.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        flash('O monitor escolhido foi deletado', 'success')
+        return redirect(url_for('manager'))
     elif flag != current_user.flag:
+        post = Users.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        flash('O monitor escolhido foi deletado', 'success')
+        return redirect(url_for('manager'))
+    else:
         abort(403)
-    post = Users.query.get_or_404(post_id)
-    db.session.delete(post)
-    db.session.commit()
-    flash('O monitor escolhido foi deletado', 'success')
-    return redirect(url_for('manager'))
 
 @app.route("/adm/managermonitor/newmonitor", methods=['GET','POST'])
 @login_required
