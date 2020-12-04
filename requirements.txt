@@ -91,3 +91,4 @@ Werkzeug==1.0.1
 WTForms==2.3.3
 xkcdpass==1.17.3
 yamlreader==3.0.4
+mysqlclient==2.0.1
