@@ -24,10 +24,10 @@
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
     {% elif current_user.flag == 'king'  %}
     <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+
     {% elif current_user.flag == 'mestre'  %}
     <button type="button" style="background-color:#9566FF ;" class="ca1 btn text-light btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_postpost', post_id=post.id) }}">Atualizar</a>
+
     {% endif %}
   </div>
   </div>

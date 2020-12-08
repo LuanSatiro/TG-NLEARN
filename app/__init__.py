@@ -57,6 +57,13 @@ class UpdateAccount(FlaskForm):
     contato = StringField('Contato', validators=[InputRequired(message='Um contato é exigido'), Length(min=1, max=60, message= 'Máximo de 60 caracteres.')])
     flag = StringField('Flag', validators=[InputRequired(message='Uma tag é exigido'), Length(min=1, max=60, message= 'Máximo de 60 caracteres.')])
     submit= SubmitField('Finalizar')
+    
+class UpdateAccount1(FlaskForm):
+    username = StringField('Nome de usuário', validators=[InputRequired(message='Um usuário é exigido'), Length(min=1, max=30, message= 'Máximo de 30 caracteres.')])
+    password = StringField('Senha', validators=[InputRequired(message='Um usuário é exigido'), Length(min=1, max=30, message= 'Máximo de 30 caracteres.')])
+    contato = StringField('Contato', validators=[InputRequired(message='Um contato é exigido'), Length(min=1, max=60, message= 'Máximo de 60 caracteres.')])
+    
+    submit= SubmitField('Finalizar')
 # from app import admin
 # admin.init_app(app)
 from app.controllers import index

@@ -1,5 +1,5 @@
 from flask import render_template, flash, request, redirect, url_for, send_from_directory, abort
-from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm, UpdateAccount
+from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm, UpdateAccount, UpdateAccount1
 from app.models.tables import Languages, Posts, Users
 from flask_login import login_user, logout_user, current_user, login_required
 from PIL import Image
@@ -58,23 +58,24 @@ def login():
    
     return render_template('login.html', form=form, languagess=languagess)
 
-@app.route("/adm/account", methods=['GET','POST'])
+@app.route("/adm/accounts", methods=['GET','POST'])
 @login_required
 def account():
     languagess = Languages.query.all()
-    form = UpdateAccount()
-    user = current_user
+    form = UpdateAccount1()
+    print('entrou1')
     if form.validate_on_submit():
-        user.username=form.username.data
-        user.password=form.password.data
-        user.contato=form.contato.data
+        print(form.errors)
+        current_user.username=form.username.data
+        current_user.password=form.password.data
+        current_user.contato=form.contato.data
         db.session.commit()
         flash('Os dados de sua conta foram atualizados', 'success')
-        return render_template("selecaoadm.html", form=form)
+        return redirect(url_for("adm", form=form))
     elif request.method == 'GET':
-        form.username.data = user.username
-        form.password.data = user.password
-        form.contato.data = user.contato
+        form.username.data = current_user.username
+        form.password.data = current_user.password
+        form.contato.data = current_user.contato
     return render_template("conta.html", form=form, languagess=languagess)
 
 @app.route("/adm/managermonitor", methods=['GET','POST'])
@@ -129,7 +130,6 @@ def new_monitor():
                                 form=form, legend='Nova linguagem', )
                 i = Users(username=form.username.data, password=form.password.data, contato=form.contato.data, flag=form.flag.data)
                 db.session.add(i)
-                db.session.commit()
                 db.session.commit()
                 flash('Um novo monitor foi adicionada', 'success')
                 return redirect(url_for('manager'))
