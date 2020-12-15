@@ -50,4 +50,5 @@ Após isso navegue até o localhost pelo navegador na página index: http://loca
 
 ```
 
-### Demonstrando o funcionamento da aplicação: https://www.youtube.com/watch?v=n51UwHDRNfo&feature=youtu.be
+### Demonstrando o funcionamento parcial da aplicação: https://www.youtube.com/watch?v=n51UwHDRNfo&feature=youtu.be
+### Demonstrando o funcionamento completo da aplicação: https://www.youtube.com/watch?v=XuhpMKGNcz4&feature=youtu.be
