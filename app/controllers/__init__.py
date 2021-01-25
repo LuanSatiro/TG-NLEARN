@@ -1,6 +1,6 @@
 from flask import render_template, flash, request, redirect, url_for, send_from_directory, abort
-from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm, UpdateAccount, UpdateAccount1
-from app.models.tables import Languages, Posts, Users
+from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm, UpdateAccount, UpdateAccount1, Coment, Response1
+from app.models.tables import Languages, Posts, Users, Comments, Response
 from flask_login import login_user, logout_user, current_user, login_required
 from PIL import Image
 import secrets
@@ -19,20 +19,66 @@ def index():
     
     return render_template('index.html', languagess=languagess)
 
-@app.route("/index/<key>")
+
+
+
+@app.route("/index/<key>", methods=["GET","POST"])
 def language(key):
     
     languages = Languages.query.filter_by(key=key).first()
-    
-    if languages == None:
-        return "<h1> Não existe está linguagem cadastrada <h1>"
+    comment = Coment()
+    response2 = Response1()
     languagess = Languages.query.all()
-    
+    # comments= Comments.query.all()
     posts = Posts.query.filter_by(languageKey = languages.key).all()
     post= Posts.query.all()
-    
-    return render_template('language.html',languages=languages, posts=posts,post=post, languagess=languagess)
+    comments = Comments.query.all()
+    response = Response.query.all()
+    if languages == None:
+        return "<h1> Não existe está linguagem cadastrada <h1>"
+    return render_template('language.html', response2=response2, response=response, comments=comments, comment=comment, languages=languages, posts=posts,post=post, languagess=languagess)
 
+@app.route("/index/posts/<key>/<int:post_id>/new", methods=["POST"])
+def comment(key, post_id):
+    comment = Coment()
+    comments = Comments.query.all()
+    if comment.validate_on_submit():
+        for o in comments:
+            if o.name == comment.name.data:
+                flash('Já existe um comentário com este nome')
+                return redirect(url_for('language',key=key))
+    i = Comments(name=comment.name.data, content=comment.text.data, post_id=post_id)
+    db.session.add(i)
+    db.session.commit()
+    flash('Comentário criado', 'success')
+    return redirect(url_for('language',key=key))
+
+@app.route("/index/posts/<key>/<int:post_id>/<int:comments_id>/new", methods=["POST"])
+def response(key, post_id, comments_id):
+    response2 = Response1()
+    i = Response(name=response2.name.data, content=response2.text.data, comments_id=comments_id)
+    db.session.add(i)
+    db.session.commit()
+    flash('comentário respondido', 'success')
+    return redirect(url_for('language',key=key))
+
+@app.route("/index/posts/<key>/<int:post_id>/<int:comments_id>/delete", methods=["POST"])
+def responsedel(key, post_id, comments_id):
+    post = Response.query.get_or_404(comments_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Comentário excluido', 'success')
+    return redirect(url_for('language',key=key))
+
+@app.route("/index/posts/<key>/<int:post_id>/delete", methods=["POST"])
+def commentdel(key, post_id):
+    comment = Coment()
+    post = Comments.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Comentário excluido', 'success')
+    return redirect(url_for('language',key=key))
+    
 @app.route("/aboutus")
 def aboutus():
     languagess = Languages.query.all()
@@ -78,6 +124,9 @@ def account():
         form.contato.data = current_user.contato
     return render_template("conta.html", form=form, languagess=languagess)
 
+
+
+# rotas manager
 @app.route("/adm/managermonitor", methods=['GET','POST'])
 @login_required
 def manager():
@@ -273,8 +322,6 @@ def update_post(post_id):
 
 
 # rotas para criação de posts
-
-
 @app.route("/adm/list/posts")
 @login_required
 def listposts():
