@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% from "_render_field.html" import render_field %}
+{% block content %}
+    {% for l in forum %}
+        <div class="mt-5 container-fluid border wow fadeInDown" style="margin-left:15%; width:70%; ">
+        <div class="text-center border mb-5 pb-5 text-light wow fadeInLeft " style="background-color: #9566FF;">
+           <h4> {{ l.title}}</h4>
+   
+           <h5> {{ l.description}}</h5>
+        </div>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flashes ">
+            {% for message in messages %}
+            <div class="text-center  container-fluid col-12"style="; background-color: ; width:300px; ">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <div class="container-fluid">
+       
+        {% for f in comments %}
+       
+            {% if f.forum_id == l.id %}
+                
+                
+                <div class="mt-2 ml-5 container-fluid border" style="width:70%;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8">
+                                <p style="">Nome: {{f.name}}</p>
+                                <h5 class="" style="margin-top:-13px;">Duvida: {{f.content}}</h5>
+                            </div>
+                            {% if current_user.is_authenticated %}
+                                <div class="col-4 mt-4 text-right" style="">
+                                    <form action="/forum/{{f.id}}/delete" method="POST">
+                                        <input class="btn ad1 " style="color:rgb(98, 129, 230);" type="submit" value="Delete">
+                                    </form>
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    <a class=" " style="" data-toggle="collapse" href="#oi{{f.id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">Responder</a>
+                    </p>
+                    <div class="  collapse multi-collapse" id="oi{{f.id}}">
+                        <div class=" card card-body">
+                            <form method="POST" action="/forum/{{l.id}}/{{f.id}}/new" >
+                                {{ response2.csrf_token }}
+                                <fieldset>
+                                <div class="text-center offset-2 col-8 " style="">
+                                {{ render_field(response2.name)}}
+                                {{ render_field(response2.text)}}
+                                <div class="form-group text-center" style="margin-left: -15%;">
+                                    {{response2.submit(class="ad2 btn", style="background-color: #6C68E8; color:#ffff;")}}
+                                </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% for t in response %}
+                    {% if t.comments_id == f.id  %}
+                        <div class="mt-2  container-fluid border" style=" margin-left:10%; width:70%;">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p style="">Nome: {{t.name}}</p>
+                                    <h5 class="" style="margin-top:-13px;">Resposta: {{t.content}}</h5>
+                                </div>
+                                {% if current_user.is_authenticated %}
+                                    <div class="col-4 mt-2 text-right" style="">
+                                        <form action="/forum/{{f.id}}/{{t.id}}/delete" method="POST">
+                                            <input class="btn ad1 " style="color:rgb(98, 129, 230);" type="submit" value="Delete">
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            
+        {% endfor %}
+        
+        </div>
+       
+    <a class=" " style="" data-toggle="collapse" href="#ola{{l.id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Comentar</a>
+        </p>
+        <div class="  collapse multi-collapse" id="ola{{l.id}}">
+            <div class=" card card-body">
+                <form method="POST" action="/forum/{{l.id}}/new" >
+                    {{ comment.csrf_token }}
+                    <fieldset>
+                      <div class="text-center offset-2 col-8 " style="">
+                      {{ render_field(comment.name)}}
+                      {{ render_field(comment.text)}}
+                      <div class="form-group text-center" style="margin-left: -15%;">
+                        {{comment.submit(class="ad2 btn", style="background-color: #6C68E8; color:#ffff;")}}
+                      </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+</div>
+</div>
+    {% endfor %}
+{% endblock %}

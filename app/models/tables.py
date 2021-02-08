@@ -18,6 +18,13 @@ class Users(db.Model, UserMixin):
     posts = db.relationship('Posts', backref='author', lazy=True)
    
 
+class Forum(db.Model):
+    __tablename__ = "forum"
+
+    id = db.Column(db.Integer, primary_key=True, nullable=True)
+    title = db.Column(db.String(20))
+    description = db.Column(db.String(120))
+
 
 class Response(db.Model):
     __tablename__ = "response"
@@ -31,9 +38,10 @@ class Comments(db.Model):
     __tablename__ = "comments"
 
     id = db.Column(db.Integer, primary_key=True, nullable=True)
-    name =  db.Column(db.String(30), unique=True)
+    name =  db.Column(db.String(30))
     content = db.Column(db.Text)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id',  ondelete='CASCADE', onupdate='CASCADE'))
+    forum_id = db.Column(db.Integer, db.ForeignKey('forum.id'))
     relation = db.relationship(Response, backref="comments", passive_deletes=True, passive_updates=True)
 
 
@@ -43,9 +51,13 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=True)
     title = db.Column(db.String(20))
     subtitle = db.Column(db.String(30))
+    img1 = db.Column(db.String(60))
     text = db.Column(db.Text)
-    key = db.Column(db.String(20))
+    img2 = db.Column(db.String(60))
+    text2 = db.Column(db.Text)
+    key = db.Column(db.String(60))
     exercise = db.Column(db.Text)
+    img3 = db.Column(db.String(40))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     languageKey = db.Column(db.String(20), db.ForeignKey('languages.key', ondelete='CASCADE', onupdate='CASCADE'))
     relation = db.relationship(Comments, backref="posts", passive_deletes=True, passive_updates=True)
@@ -56,10 +68,14 @@ class Languages(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=True)
     title = db.Column(db.String(20))
     description = db.Column(db.String(120))
-    image = db.Column(db.String(40))
+    image = db.Column(db.String(60))
     key = db.Column(db.String(20), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     relation = db.relationship(Posts, backref="languages", passive_deletes=True, passive_updates=True)
+
+
+
+    
 
     @property
     def is_authenticated(self):

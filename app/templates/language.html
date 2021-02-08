@@ -7,7 +7,9 @@
             {% include "guia.html" %}
         </div>
         <div class="container-fluid col-9" style="margin-left:">
+            
             {%for l in posts%}
+            
             <div class="container-fluid border mt-4" style="margin-left:;">
                 <div class="container-fluid " style="margin-left:;">
                     <h1>{{l.title}}</h1>
@@ -15,19 +17,28 @@
                 <div class="container-fluid  mt-2" style="margin-left:;">
                     <h3 style="">{{l.subtitle}}</h3>
                 </div>
-                
+                <div class="">
+                    <img src="/static/storage/{{l.img1 }}" style="margin-left:12%; width:75%; height: 400px;" class="card-img-top" alt="Autor decidiu não inserir imagens ou houve um problema com a página, recarregue por favor!">
+                </div>
                 <div class="container-fluid  mt-2" style="margin-left:; ; ">
                     <span style="">{{l.text}}</span>
                 </div>
-                
+                <div class="">
+                    <img src="/static/storage/{{l.img2 }}" style="margin-left:12%; width:75%;  height: 400px;" class="card-img-top" alt="Autor decidiu não inserir imagens ou houve um problema com a página, recarregue por favor!">
+                </div>
+                <div class="container-fluid  mt-2" style="margin-left:; ; ">
+                    <span style="">{{l.text2}}</span>
+                </div>
                 <a class="btn ad2  " style="color:rgb(255, 255, 255); background-color: #6C68E8;" data-toggle="collapse" href="#{{l.title}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Resolução do exercicio</a>
                     </p>
                     <div class=" collapse multi-collapse" id="{{l.title}}">
                         <div class=" card card-body">
+                            <img src="/static/storage/{{l.img3 }}" style="margin-left:5%; width:90%;  height: 500px;" class="card-img-top" alt="Autor decidiu não inserir imagens ou houve um problema com a página, recarregue por favor!">
+                       
+                        
                             {{ l.exercise }}
                         </div>
                     </div>
-                <a class=" " style="" data-toggle="collapse" href="#{{l.title}}3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">{{ comments | length + response | length}} comentários</a>
                 </p>
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -39,9 +50,12 @@
                     {% endif %}
                     {% endwith %}
                     <div class="container-fluid">
+                   
                     {% for f in comments %}
-                    
+                   
                         {% if f.post_id == l.id %}
+                            
+                            
                             <div class="mt-2 ml-5 container-fluid border" style="width:70%;">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -56,6 +70,7 @@
                                                 </form>
                                             </div>
                                         {% endif %}
+                                        
                                     </div>
                                 </div>
                                 <a class=" " style="" data-toggle="collapse" href="#oi{{f.id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">Responder</a>
@@ -96,9 +111,11 @@
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
+                        
                     {% endfor %}
+                    
                     </div>
-              
+                   
                 <a class=" " style="" data-toggle="collapse" href="#ola{{l.id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Comentar</a>
                     </p>
                     <div class="  collapse multi-collapse" id="ola{{l.id}}">
@@ -117,7 +134,9 @@
                         </div>
                     </div>
             </div>
+            
             {% endfor%}
+           
         </div>
     </div>
 </div>

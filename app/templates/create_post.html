@@ -10,15 +10,19 @@
     </div>
 {% endif %}
 {% endwith %}
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <legend class="border-bottom mb-4">{{ legend }}</legend>
     <fieldset>
       <div class=" " style="margin-left: 10%;">
       {{ render_field(form.title)}}
       {{ render_field(form.subtitle)}}
+      {{ render_field(form.picture1)}}
       {{ render_field(form.text)}}
+      {{ render_field(form.picture2)}}
+      {{ render_field(form.text2)}}
       <br>{{ render_field(form.exercise)}}</br>
+      {{ render_field(form.picture3)}}
       {{ render_field(form.key)}}
       {{ render_field(form.languageKey)}}
       </div>

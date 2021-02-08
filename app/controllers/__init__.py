@@ -1,6 +1,6 @@
 from flask import render_template, flash, request, redirect, url_for, send_from_directory, abort
 from app import app, db, CreateLanguageForm, CreatePostForm, LoginForm, lm, UpdateAccount, UpdateAccount1, Coment, Response1
-from app.models.tables import Languages, Posts, Users, Comments, Response
+from app.models.tables import Languages, Posts, Users, Comments, Response, Forum
 from flask_login import login_user, logout_user, current_user, login_required
 from PIL import Image
 import secrets
@@ -34,19 +34,76 @@ def language(key):
     post= Posts.query.all()
     comments = Comments.query.all()
     response = Response.query.all()
+    
     if languages == None:
         return "<h1> Não existe está linguagem cadastrada <h1>"
-    return render_template('language.html', response2=response2, response=response, comments=comments, comment=comment, languages=languages, posts=posts,post=post, languagess=languagess)
+    return render_template('language.html',  response2=response2, response=response, comments=comments, comment=comment, languages=languages, posts=posts,post=post, languagess=languagess)
+
+@app.route("/forum", methods=["GET","POST"])
+def forum():
+    forum = Forum.query.all()
+    comment = Coment()
+    response2 = Response1()
+    languagess = Languages.query.all()
+    comments = Comments.query.all()
+    response = Response.query.all()
+    return render_template('forum.html', languagess=languagess, forum=forum, comments=comments, response=response, comment=comment, response2=response2)
+
+
+@app.route("/index/<key>/<post_id>/<comments_id>", methods=["GET","POST"])
+def languageteste(key, post_id, comments_id):
+    comment1 = Comments.query.filter_by(post_id=post_id).all()
+    response1 = Response.query.filter_by(comments_id=comments_id).all()
+    return redirect(url_for('language',key=key, post_id=post_id, comment1=comment1))
+    # return render_template('teste.html', comment1=comment1, response1=response1)
+
+
+#### rotas para os comentários do forum
+@app.route("/forum/<int:forum_id>/new", methods=["POST"])
+def comment2(forum_id):
+    comment = Coment()
+    comments = Comments.query.all()
+
+    i = Comments(name=comment.name.data, content=comment.text.data, forum_id=forum_id)
+    db.session.add(i)
+    db.session.commit()
+    flash('Comentário criado', 'success')
+    return redirect(url_for('forum'))
+
+@app.route("/forum/<int:forum_id>/<int:comments_id>/new", methods=["POST"])
+def response2(forum_id, comments_id):
+    response2 = Response1()
+    i = Response(name=response2.name.data, content=response2.text.data, comments_id=comments_id)
+    db.session.add(i)
+    db.session.commit()
+    flash('comentário respondido', 'success')
+    return redirect(url_for('forum'))
+
+@app.route("/forum/<int:forum_id>/<int:comments_id>/delete", methods=["POST"])
+def responsede2(forum_id, comments_id):
+    post = Response.query.get_or_404(comments_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Comentário excluido', 'success')
+    return redirect(url_for('forum'))
+
+@app.route("/forum/<int:forum_id>/delete", methods=["POST"])
+def commentde2(forum_id):
+    comment = Coment()
+    post = Comments.query.get_or_404(forum_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Comentário excluido', 'success')
+    return redirect(url_for('forum'))
+
+
+### Rotas para comentários dos posts
 
 @app.route("/index/posts/<key>/<int:post_id>/new", methods=["POST"])
 def comment(key, post_id):
     comment = Coment()
     comments = Comments.query.all()
-    if comment.validate_on_submit():
-        for o in comments:
-            if o.name == comment.name.data:
-                flash('Já existe um comentário com este nome')
-                return redirect(url_for('language',key=key))
+
     i = Comments(name=comment.name.data, content=comment.text.data, post_id=post_id)
     db.session.add(i)
     db.session.commit()
@@ -241,7 +298,7 @@ def save_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/storage', picture_fn)
 
-    output_size = (125, 125)
+    output_size = (1600, 1200)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -343,8 +400,17 @@ def postpost():
     languagess = Languages.query.all()
     form = CreatePostForm()
     form.languageKey.choices = [(l.key, l.title) for l in Languages.query.all()]
+    picture_file1 = ''
+    picture_file2 = ''
+    picture_file3 = ''
+    if form.picture1.data:
+            picture_file1 = save_picture(form.picture1.data)
+    if form.picture2.data:
+            picture_file2 = save_picture(form.picture2.data)
+    if form.picture3.data:
+            picture_file3 = save_picture(form.picture3.data)
     if form.validate_on_submit():
-        i = Posts(title=form.title.data, subtitle=form.subtitle.data, text=form.text.data, key=form.key.data, exercise=form.exercise.data, languageKey=form.languageKey.data, author=current_user)
+        i = Posts(title=form.title.data, subtitle=form.subtitle.data, img1=picture_file1,text=form.text.data, img2=picture_file2,text2=form.text2.data, key=form.key.data, exercise=form.exercise.data, img3=picture_file3, languageKey=form.languageKey.data, author=current_user)
         db.session.add(i)
         db.session.commit()
         flash('Seu conteudo foi criado', 'success')

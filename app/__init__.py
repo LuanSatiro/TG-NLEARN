@@ -45,8 +45,12 @@ class CreatePostForm(FlaskForm):
 
     title = StringField('Titulo', validators=[InputRequired(message='Um titulo é exigido'), Length(min=1, max=20, message= 'Máximo de 20 caracteres.')])
     subtitle = StringField('Subtitulo', validators=[InputRequired('Um subtitulo é exigido')])
+    picture1 = FileField('Upload da imagem', validators=[FileAllowed(['jpg', 'png'])])
     text= TextAreaField('Texto', validators=[InputRequired('Um texto é exigido')])
+    picture2 = FileField('Upload da imagem', validators=[FileAllowed(['jpg', 'png'])])
+    text2= TextAreaField('Texto', validators=[InputRequired('Um texto é exigido')])
     exercise = TextAreaField('Exercicio', validators=[InputRequired('A exercise is required')])
+    picture3 = FileField('Upload da imagem', validators=[FileAllowed(['jpg', 'png'])])
     key = StringField('key (Será atribuido ao guia de tópicos da linguagem)', validators=[InputRequired('Uma key é exigida'), Length(min=1, max=20, message= 'Máximo de 20 caracteres')])
     languageKey = SelectField(u'Key da linguagem')
     submit= SubmitField('Finalizar')
